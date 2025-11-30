@@ -103,3 +103,9 @@ def mat_sub(A, B):
             row.append(A[i][j] - B[i][j])
         result.append(row)
     return result
+
+#convergence - checking if vectors are close
+
+def converged(x_old, x_new, eps=1e-9):
+    diff = mat_sub(x_old, x_new)
+    return norm(diff) < eps
