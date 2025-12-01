@@ -34,10 +34,9 @@ SVD
 ===
 
 
-    Add a short description here!
+    University simple SVD demonstration project
 
 
-A longer description of your project goes here...
 
 
 .. _pyscaffold-notes:
