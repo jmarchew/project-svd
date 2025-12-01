@@ -7,4 +7,4 @@ SRC_DIR = os.path.join(BASE_DIR, "src")
 sys.path.insert(0, SRC_DIR)
 
 # Import and run your SVD module
-import svd.mysvd
+import svd.main
