@@ -99,7 +99,10 @@ def vec_dot(a, b):
     ensure_vector(b, "b")
     ensure_same_length(a, b)
 
-    return sum(a[i] * b[i] for i in range(len(a)))
+    result = 0
+    for i in range(len(a)):
+        result += a[i] * b[i]
+    return result
 
 
 def norm(x):
@@ -127,7 +130,10 @@ def normalize(x):
     n = norm(x)
     if n == 0:
         raise ValueError("Normalization of a zero vector is forbidden!")
-    return [xi / n for xi in x]
+    result = []
+    for xi in x:
+        result.append(xi / n)
+    return result
 
 
 def vector_scalar_mul(a, x):
@@ -148,7 +154,11 @@ def vector_scalar_mul(a, x):
     if not isinstance(a, (int, float)):
         raise TypeError("Scalar must be numeric")
     ensure_vector(x)
-    return [a * xi for xi in x]
+
+    result = []
+    for xi in x:
+        result.append(a * xi)
+    return result
 
 
 def vec_add(x, y):
@@ -162,7 +172,10 @@ def vec_add(x, y):
     ensure_vector(x)
     ensure_vector(y)
     ensure_same_length(x, y)
-    return [x[i] + y[i] for i in range(len(x))]
+    result = []
+    for i in range(len(x)):
+        result.append(x[i] + y[i])
+    return result
 
 
 #################################
@@ -182,7 +195,13 @@ def mat_transpose(A):
     rows = len(A)
     cols = len(A[0])
 
-    return [[A[i][j] for i in range(rows)] for j in range(cols)]
+    T = []
+    for j in range(cols):
+        new_row = []
+        for i in range(rows):
+            new_row.append(A[i][j])
+        T.append(new_row)
+    return T
 
 
 def mat_vector_mul(A, x):
@@ -204,7 +223,10 @@ def mat_vector_mul(A, x):
     if len(A[0]) != len(x):
         raise ValueError("Matrix column count must match vector length")
 
-    return [vec_dot(row, x) for row in A]
+    result = []
+    for row in A:
+        result.append(vec_dot(row, x))
+    return result
 
 
 def matrix_mul(A, B):
@@ -227,7 +249,15 @@ def matrix_mul(A, B):
         raise ValueError("A columns must equal B rows")
 
     BT = mat_transpose(B)
-    return [[vec_dot(row, col) for col in BT] for row in A]
+    result = []
+
+    for row in A:
+        new_row = []
+        for col in BT:
+            new_row.append(vec_dot(row, col))
+        result.append(new_row)
+
+    return result
 
 def mat_sub(A, B):
     """
@@ -248,8 +278,13 @@ def mat_sub(A, B):
     if len(A) != len(B) or len(A[0]) != len(B[0]):
         raise ValueError("Matrices must have identical dimensions")
 
-    return [[A[i][j] - B[i][j] for j in range(len(A[0]))]
-            for i in range(len(A))]
+    result = []
+    for i in range(len(A)):
+        new_row = []
+        for j in range(len(A[0])):
+            new_row.append(A[i][j] - B[i][j])
+        result.append(new_row)
+    return result
 
 
 #################################
