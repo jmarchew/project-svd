@@ -2,8 +2,6 @@
 Basic mathematical utilities required for implementing Simple SVD.
 Includes vector and matrix operations with input validation and safe checks.
 
-All functions are implemented without using NumPy to illustrate the
-mathematical foundations explicitly.
 """
 
 import math

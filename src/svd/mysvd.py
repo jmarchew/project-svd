@@ -1,15 +1,11 @@
 """
-Minimal SVD (power method + deflation) with input validation.
-Assumes validation helpers are named: ensure_vector, ensure_matrix, ensure_same_length
-and are available in svd.mymath.
+Minimal SVD (power method + deflation).
+
 """
 
 from svd.mymath import (
-    vec_dot,
     normalize,
     norm,
-    vector_scalar_mul,
-    vec_add,
     mat_sub,
     mat_transpose,
     mat_vector_mul,
@@ -17,7 +13,6 @@ from svd.mymath import (
     converged,
     ensure_matrix,
     ensure_vector,
-    ensure_same_length,
 )
 from sklearn.decomposition import TruncatedSVD
 import numpy as np
@@ -69,8 +64,13 @@ def mysvd(A, k=None):
     m = len(A)
     n = len(A[0])
 
-    # working copy (deep-ish copy of rows)
-    A_copy = [row[:] for row in A]
+    # working copy
+    A_copy = []
+    for row in A:
+        new_row = []
+        for val in row:
+            new_row.append(val)
+        A_copy.append(new_row)
 
     if k is None:
         k = min(m, n)
@@ -87,8 +87,13 @@ def mysvd(A, k=None):
         Vs.append(v)
 
         # deflation: A' = A - sigma * (u v^T)
-        # build rank-1 matrix sigma * outer(u, v)
-        rank1 = [[sigma * u[i] * v[j] for j in range(n)] for i in range(m)]
+        rank1 = []
+        for i in range(m):
+            new_row = []
+            for j in range(n):
+                new_row.append(sigma * u[i] * v[j])
+            rank1.append(new_row)
+
         A_copy = mat_sub(A_copy, rank1)
 
     return sigmas, Us, Vs
