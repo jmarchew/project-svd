@@ -37,6 +37,11 @@ def power_method(A, iterations=1000, eps=1e-9):
         # x_new = (A^T A) x
         ATA_x = mat_vector_mul(matrix_mul(mat_transpose(A), A), x)
         ensure_vector(ATA_x)
+
+        # Check if result is effectively zero
+        if norm(ATA_x) < 1e-10:
+            raise ValueError("Matrix has been fully deflated (rank-deficient or repeated singular values)")
+        
         x_new = normalize(ATA_x)
 
         if converged(x, x_new, eps):
