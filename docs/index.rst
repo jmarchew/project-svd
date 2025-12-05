@@ -2,7 +2,7 @@
 SVD
 ===
 
-This is the documentation of **SVD**.
+Implementation of Singular Value Decomposition **SVD**.
 
 .. note::
 
@@ -35,7 +35,7 @@ Contents
    Authors <authors>
    Changelog <changelog>
    Module Reference <api/modules>
-
+   test_mysvd
 
 Indices and tables
 ==================
